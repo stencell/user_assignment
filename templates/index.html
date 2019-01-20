@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Workshop User Assignment</title>
+    <head>
+        <link href="../static/main.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <h1>User Assignment</h1>
+            <h3>Fill out the form below and a user ID will be assigned to you for the workshop.</h3>
+            <div class="message">
+                {{ text | safe }}
+            </div>
+            <form action="{{ url_for('success') }}"" method="POST">
+                <input placeholder="Enter your name" type="text" name="real_name" required>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
