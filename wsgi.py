@@ -36,6 +36,7 @@ class User(db.Model):
     user_name = db.Column(db.String(80), unique=True, nullable=False)
     #user_id = db.Column(db.String(7), unique=True, nullable=False)
 
+# TO DO: I admit I don't know if this needs to be run as SQLAlchemy docs indicate that it will handle an __init__ when defining a data model class
     def __init__(self, user_name):
         self.user_name = user_name
         print("user init ran")
@@ -60,11 +61,14 @@ def success():
             db.session.commit()
             if data.id <= 200:
                 return render_template('success.html', workshop_user_id="user" + str(data.id))
+                # TO DO: Add more information so success.html, like link to docs, console, etc.
             else:
                 return render_template("index.html", text="Sorry, we're out of user IDs. Please ask trainer for help.")
         else:
             workshop_user_id = db.session.query(User).filter(User.user_name == user_name).first()
             return render_template("index.html", text="You already have a user assigned: user" + str(workshop_user_id.id))
+
+# TO DO: 
 
 
 
