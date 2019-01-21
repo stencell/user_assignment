@@ -1,8 +1,33 @@
+"""
+You will need a Postgres DB to run this. For development, you can run using Docker:
+docker pull postgres
+    docker run -p 5432:5432 --name data_coll_db \
+        -e POSTGRES_PASSWORD=mypassword \
+        -e POSTGRES_USER=user\
+        -d postgres
+
+If you want an easy way to interact with DB:
+    docker pull dpage/pgadmin4
+    docker run -p 80:80 \
+        -e "PGADMIN_DEFAULT_EMAIL=user@domain.com" \
+        -e "PGADMIN_DEFAULT_PASSWORD=mypassword" \
+        -d dpage/pgadmin4
+
+Please ensure you have environment variables set for:
+USER_REG_USER
+USER_REG_PASSWORD
+USER_REG_SERVICE
+USER_REG_DB
+"""
+
+
 from flask import render_template, Flask, request
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 application = Flask(__name__)
-application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:mypassword@localhost/user_reg'
+#application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:mypassword@localhost/user_reg'
+application.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://' + os.environ['USER_REG_USER'] + ":" + os.environ['USER_REG_PASSWORD'] + "@" + os.environ['USER_REG_SERVICE'] + "/" + os.environ['USER_REG_DB']
 db = SQLAlchemy(application)
 
 class User(db.Model):
